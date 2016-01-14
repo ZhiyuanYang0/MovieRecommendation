@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph author="Samuel" created="Thu Dec 03 16:08:52 PST 2015" guiVersion="4.1.0" id="1449189585991" licenseCode="RegCode" licenseType="Community" modified="Thu Dec 03 16:59:14 PST 2015" modifiedBy="Samuel" name="gross" revision="1.9" showComponentDetails="true">
+<Global>
+<Metadata id="Metadata3">
+<Record fieldDelimiter="|" name="gross_gong_zuo_biao1" recordDelimiter="\n" type="delimited">
+<Field format="" label="ColumnA" name="ColumnA" type="long"/>
+<Field format="" label="Release Date" name="Release_Date" type="string"/>
+<Field format="" label="Movie" name="Movie" type="string"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Production Budget" name="Production_Budget" type="long"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Domestic Gross" name="Domestic_Gross" type="long"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Worldwide Gross" name="Worldwide_Gross" type="long"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata2" previewAttachmentCharset="ISO-8859-1">
+<Record fieldDelimiter="|" name="gross_gong_zuo_biao1" previewAttachmentCharset="ISO-8859-1" recordDelimiter="\n" type="delimited">
+<Field format="" label="ColumnA" name="ColumnA" type="long"/>
+<Field format="" label="Release Date" name="Release_Date" type="string"/>
+<Field format="" label="Movie" name="Movie" type="string"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Production Budget" name="Production_Budget" type="number"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Domestic Gross" name="Domestic_Gross" type="number"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Worldwide Gross" name="Worldwide_Gross" type="number"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata4">
+<Record fieldDelimiter="|" name="gross_gong_zuo_biao1" recordDelimiter="\n" type="delimited">
+<Field format="" label="ColumnA" name="ColumnA" type="long"/>
+<Field format="" label="Release Date" name="Release_Date" type="string"/>
+<Field format="" label="Movie" name="Movie" type="string"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Production Budget" name="Production_Budget" type="long"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Domestic Gross" name="Domestic_Gross" type="long"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Worldwide Gross" name="Worldwide_Gross" type="long"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata8">
+<Record fieldDelimiter="|" name="gross_gong_zuo_biao1" recordDelimiter="\n" type="delimited">
+<Field format="" label="ColumnA" name="ColumnA" type="long"/>
+<Field format="" label="Release Date" name="Release_Date" type="string"/>
+<Field format="" label="Movie" name="Movie" type="string"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Production Budget" name="Production_Budget" type="long"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Domestic Gross" name="Domestic_Gross" type="long"/>
+<Field format="excel:\$#,##0_);[Red]\(\$#,##0\)" label="Worldwide Gross" name="Worldwide_Gross" type="long"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata0">
+<Record fieldDelimiter=";" name="Movies" recordDelimiter="\n" type="delimited">
+<Field name="Title" size="255" type="string"/>
+<Field length="2" name="Rating" scale="1" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata1">
+<Record fieldDelimiter=";" name="Movies" recordDelimiter="\n" type="delimited">
+<Field name="Title" size="255" type="string"/>
+<Field length="2" name="Rating" scale="1" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata5" previewAttachmentCharset="ISO-8859-1">
+<Record fieldDelimiter=";" name="Movies" previewAttachmentCharset="ISO-8859-1" recordDelimiter="\n" type="delimited">
+<Field name="Title" size="255" type="string"/>
+<Field length="2" name="Rating" scale="1" type="number"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata6">
+<Record fieldDelimiter=";" name="Movies" recordDelimiter="\n" type="delimited">
+<Field name="Title" size="255" type="string"/>
+<Field length="2" name="Rating" scale="1" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata9">
+<Record fieldDelimiter=";" name="Movies" recordDelimiter="\n" type="delimited">
+<Field name="Title" size="255" type="string"/>
+<Field length="2" name="Rating" scale="1" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata10">
+<Record fieldDelimiter=";" name="Movies" recordDelimiter="\n" type="delimited">
+<Field name="Title" size="255" type="string"/>
+<Field length="2" name="Rating" scale="1" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata7">
+<Record fieldDelimiter="|" name="recordName" recordDelimiter="\n" type="delimited">
+<Field name="title" type="string"/>
+<Field name="rating" type="number"/>
+<Field name="budget" type="number"/>
+<Field name="dgross" type="number"/>
+<Field name="gross" type="number"/>
+</Record>
+</Metadata>
+<Connection database="MYSQL" dbURL="jdbc:mysql://moviedb.cb47kibm2dah.us-west-2.rds.amazonaws.com/MovieDB" id="JDBC0" jdbcSpecific="MYSQL" name="Movie" password="33333333" type="JDBC" user="yang"/>
+<GraphParameters>
+<GraphParameterFile fileURL="workspace.prm"/>
+</GraphParameters>
+<Dictionary/>
+</Global>
+<Phase number="0">
+<Node dbConnection="JDBC0" guiName="DBInputTable" guiX="85" guiY="236" id="DBINPUT_TABLE" type="DB_INPUT_TABLE">
+<attr name="sqlQuery"><![CDATA[select Title, Rating
+from Movies
+where Rating > 0]]></attr>
+</Node>
+<Node guiName="ExtHashJoin" guiX="392" guiY="184" id="EXT_HASH_JOIN" joinKey="$Movie=$Title" type="EXT_HASH_JOIN">
+<attr name="transform"><![CDATA[//#CTL2
+
+// Transforms input record into output record.
+function integer transform() {
+	$out.0.title = $in.0.Movie;
+	$out.0.rating = $in.1.Rating;
+	$out.0.budget = $in.0.Production_Budget;
+	$out.0.dgross = $in.0.Domestic_Gross;
+	$out.0.gross = $in.0.Worldwide_Gross;
+
+	return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Node fileURL="${DATAIN_DIR}/gross.xlsx" guiName="SpreadsheetDataReader" guiX="72" guiY="108" id="SPREADSHEET_DATA_READER" sheet="工作表1" type="SPREADSHEET_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mapping>
+    <globalAttributes>
+        <orientation>VERTICAL</orientation>
+        <step>1</step>
+        <writeHeader>true</writeHeader>
+    </globalAttributes>
+    <defaultSkip>1</defaultSkip>
+    <headerGroups>
+        <headerGroup skip="1">
+            <autoMappingType>NAME</autoMappingType>
+            <headerRanges>
+                <headerRange begin="A1"/>
+                <headerRange begin="B1"/>
+                <headerRange begin="C1"/>
+                <headerRange begin="D1"/>
+                <headerRange begin="E1"/>
+                <headerRange begin="F1"/>
+            </headerRanges>
+        </headerGroup>
+    </headerGroups>
+</mapping>
+]]></attr>
+</Node>
+<Node existingSheetsActions="DO_NOTHING" fileURL="${DATAOUT_DIR}/1.xlsx" guiName="SpreadsheetDataWriter" guiX="638" guiY="206" id="SPREADSHEET_DATA_WRITER" sheet="Sheet0" type="SPREADSHEET_WRITER" writeMode="OVERWRITE_SHEET_IN_MEMORY">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mapping>
+    <globalAttributes>
+        <orientation>VERTICAL</orientation>
+        <step>1</step>
+        <writeHeader>true</writeHeader>
+    </globalAttributes>
+    <defaultSkip>1</defaultSkip>
+    <headerGroups>
+        <headerGroup skip="1">
+            <cloverField>title</cloverField>
+            <headerRanges>
+                <headerRange begin="A1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>rating</cloverField>
+            <headerRanges>
+                <headerRange begin="B1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>budget</cloverField>
+            <headerRanges>
+                <headerRange begin="C1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>dgross</cloverField>
+            <headerRanges>
+                <headerRange begin="D1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>gross</cloverField>
+            <headerRanges>
+                <headerRange begin="E1"/>
+            </headerRanges>
+        </headerGroup>
+    </headerGroups>
+</mapping>
+]]></attr>
+</Node>
+<Edge fromNode="DBINPUT_TABLE:0" guiBendpoints="" guiRouter="Manhattan" id="Edge4" inPort="Port 1 (slave)" metadata="Metadata5" outPort="Port 0 (out)" toNode="EXT_HASH_JOIN:1"/>
+<Edge fromNode="EXT_HASH_JOIN:0" guiBendpoints="" guiRouter="Manhattan" id="Edge5" inPort="Port 0 (input)" metadata="Metadata7" outPort="Port 0 (out)" toNode="SPREADSHEET_DATA_WRITER:0"/>
+<Edge fromNode="SPREADSHEET_DATA_READER:0" guiBendpoints="" guiRouter="Manhattan" id="Edge3" inPort="Port 0 (driver)" metadata="Metadata4" outPort="Port 0 (output)" toNode="EXT_HASH_JOIN:0"/>
+</Phase>
+</Graph>

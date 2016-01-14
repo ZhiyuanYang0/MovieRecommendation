@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph author="zhao" created="Wed Dec 02 15:45:30 PST 2015" guiVersion="4.1.0" id="1449171337780" licenseCode="RegCode" licenseType="Community" modified="Thu Dec 03 12:52:39 PST 2015" modifiedBy="zhao" name="DirectorIncome" revision="1.8" showComponentDetails="true">
+<Global>
+<Metadata id="Metadata4">
+<Record fieldDelimiter="|" name="Director_Join" recordDelimiter="\n" type="delimited">
+<Field name="Director" type="string"/>
+<Field name="Gross" trim="true" type="number"/>
+<Field length="12" name="AverageRating" scale="2" trim="true" type="decimal"/>
+<Field name="MovieNumber" trim="true" type="integer"/>
+<Field name="GrossPerMovie" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata0" previewAttachmentCharset="ISO-8859-1">
+<Record fieldDelimiter="|" name="Director_Rating" previewAttachmentCharset="ISO-8859-1" recordDelimiter="\n" type="delimited">
+<Field name="Director" type="string"/>
+<Field name="AverageRating" type="decimal"/>
+<Field name="MovieCount" type="integer"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata1">
+<Record fieldDelimiter=";" name="Directors" recordDelimiter="\n" type="delimited">
+<Field name="DirectorId" size="11" type="integer"/>
+<Field name="Name" size="511" type="string"/>
+<Field length="2" name="Rating" scale="1" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata3">
+<Record fieldDelimiter="|" name="Average_Rating" recordDelimiter="\n" type="delimited">
+<Field name="DirectorId" type="long"/>
+<Field name="Name" type="string"/>
+<Field name="Rating" type="decimal"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata2" previewAttachmentCharset="ISO-8859-1">
+<Record fieldDelimiter="|" name="Directors_Income" previewAttachmentCharset="ISO-8859-1" recordDelimiter="\n" type="delimited">
+<Field format="" label="Row" name="Row" type="long"/>
+<Field format="" label="Person" name="Person" type="string"/>
+<Field format="excel:&quot;$&quot;#,##0.00;[Red]\-&quot;$&quot;#,##0.00" label="Total Gross" name="Total_Gross" type="number"/>
+</Record>
+</Metadata>
+<Connection database="MYSQL" dbURL="jdbc:mysql://moviedb.cb47kibm2dah.us-west-2.rds.amazonaws.com:3306/MovieDB" id="JDBC0" jdbcSpecific="MYSQL" name="MovieDB" password="12345678" type="JDBC" user="moviedotcom"/>
+<GraphParameters>
+<GraphParameterFile fileURL="workspace.prm"/>
+</GraphParameters>
+<Dictionary/>
+</Global>
+<Phase number="0">
+<Node aggregateKey="DirectorId;Name" guiName="Aggregate" guiX="275" guiY="241" id="AGGREGATE" mapping="$Director:=$Name;$AverageRating:=avg($Rating);$MovieCount:=count();" type="AGGREGATE"/>
+<Node dbConnection="JDBC0" guiName="DBInputTable" guiX="70" guiY="241" id="DBINPUT_TABLE" type="DB_INPUT_TABLE">
+<attr name="sqlQuery"><![CDATA[SELECT Directors.DirectorId, CONCAT(Directors.FirstName, " ", Directors.LastName) AS Name, Movies.Rating AS Rating
+FROM Directors INNER JOIN DirectedMovies
+on Directors.DirectorId = DirectedMovies.DirectorId
+INNER JOIN Movies
+ON DirectedMovies.MovieId = Movies.MovieId]]></attr>
+</Node>
+<Node guiName="ExtHashJoin" guiX="466" guiY="155" id="EXT_HASH_JOIN" joinKey="$Person=$Director" type="EXT_HASH_JOIN">
+<attr name="transform"><![CDATA[//#CTL2
+
+// Transforms input record into output record.
+function integer transform() {
+	$out.0.Director = $in.1.Director;
+	$out.0.Gross = $in.0.Total_Gross;
+	$out.0.AverageRating = $in.1.AverageRating;
+	$out.0.MovieNumber = $in.1.MovieCount;
+	$out.0.GrossPerMovie = $in.0.Total_Gross / $in.1.MovieCount;
+
+	return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Node dataPolicy="lenient" fileURL="${DATAIN_DIR}/Directors_Income.xlsx" guiName="SpreadsheetDataReader" guiX="70" guiY="95" id="SPREADSHEET_DATA_READER" sheet="Sheet1" skipRecords="1" type="SPREADSHEET_READER"/>
+<Node existingSheetsActions="DO_NOTHING" fileURL="sandbox://LocalMovieProject/data-out/Director_Rating_Income.xlsx" guiName="SpreadsheetDataWriter" guiX="624" guiY="161" id="SPREADSHEET_DATA_WRITER" sheet="Sheet0" type="SPREADSHEET_WRITER" writeMode="OVERWRITE_SHEET_IN_MEMORY">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mapping>
+    <globalAttributes>
+        <orientation>VERTICAL</orientation>
+        <step>1</step>
+        <writeHeader>true</writeHeader>
+    </globalAttributes>
+    <defaultSkip>1</defaultSkip>
+    <headerGroups>
+        <headerGroup skip="1">
+            <cloverField>Director</cloverField>
+            <headerRanges>
+                <headerRange begin="A1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>Gross</cloverField>
+            <headerRanges>
+                <headerRange begin="B1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>AverageRating</cloverField>
+            <headerRanges>
+                <headerRange begin="C1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>MovieNumber</cloverField>
+            <headerRanges>
+                <headerRange begin="D1"/>
+            </headerRanges>
+        </headerGroup>
+        <headerGroup skip="1">
+            <cloverField>GrossPerMovie</cloverField>
+            <headerRanges>
+                <headerRange begin="E1"/>
+            </headerRanges>
+        </headerGroup>
+    </headerGroups>
+</mapping>
+]]></attr>
+</Node>
+<Edge fromNode="AGGREGATE:0" guiBendpoints="" guiRouter="Manhattan" id="Edge5" inPort="Port 1 (slave)" metadata="Metadata0" outPort="Port 0 (out)" toNode="EXT_HASH_JOIN:1"/>
+<Edge fromNode="DBINPUT_TABLE:0" guiBendpoints="" guiRouter="Manhattan" id="Edge2" inPort="Port 0 (in)" metadata="Metadata3" outPort="Port 0 (out)" toNode="AGGREGATE:0"/>
+<Edge fromNode="EXT_HASH_JOIN:0" guiBendpoints="" guiRouter="Manhattan" id="Edge6" inPort="Port 0 (input)" metadata="Metadata4" outPort="Port 0 (out)" toNode="SPREADSHEET_DATA_WRITER:0"/>
+<Edge fromNode="SPREADSHEET_DATA_READER:0" guiBendpoints="" guiRouter="Manhattan" id="Edge3" inPort="Port 0 (driver)" metadata="Metadata2" outPort="Port 0 (output)" toNode="EXT_HASH_JOIN:0"/>
+</Phase>
+</Graph>
